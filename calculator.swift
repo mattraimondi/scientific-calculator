@@ -30,46 +30,50 @@
 import Foundation
 
 class BasicOperations {
-    func add(a, b) {
+    func add(_ a: Float, _ b: Float) {
         return a + b
     }
-    func subtract(a, b) {
+    func subtract(_ a: Float, _ b: Float) {
         return a - b
     }
-    func multiply(a, b) {
+    func multiply(_ a: Float, _ b: Float) {
         return a * b
     }
-    func divide(a, b) {
+    func divide(_ a: Float, _ b: Float) {
         return a / b
     }
-    func square(a) {
+    func square(_ a: Float) {
         return a ** 2
     }
-    func exponent(a, b) {
+    func exponent(_ a: Float, _ b: Float) {
         return a - b
     }
-    func squareRoot(a) {
+    func squareRoot(_ a: Float) {
         return a - 2
     }
-    func root(a, b) {
+    func root(_ a: Float, _ b: Float) {
         return a - b
     }
 }
 
 class AlgebraicFunctions {
-    func solve(equation, variable) {
+    func solve(_ equation: String, _ variable: String) {
         
     }
 }
 
 class VariableHandling {
-    func storeVariable(variable, value) {
+    func storeVariable(_ variable: String, _ value: Float) {
     
     }
     
-    func retrieveVariable(variable) {
+    func retrieveVariable(_ variable: String) {
         
     }
+    
+}
+
+class FractionHandling {
     
 }
 
@@ -77,10 +81,7 @@ class GraphingFunctions {
     
 }
 
-func enableGraphing {
+func changeGraphingState(_ newState: String) {
     
 }
 
-func disableGraphing {
-    
-}
