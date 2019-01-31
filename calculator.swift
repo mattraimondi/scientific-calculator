@@ -27,7 +27,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-class Operations {
+import Foundation
+
+class BasicOperations {
     func add(a, b) {
         return a + b
     }
@@ -54,8 +56,21 @@ class Operations {
     }
 }
 
+class AlgebraicFunctions {
+    func solve(equation, variable) {
+        
+    }
+}
+
 class VariableHandling {
-    //variables.xml
+    func storeVariable(variable, value) {
+    
+    }
+    
+    func retrieveVariable(variable) {
+        
+    }
+    
 }
 
 class GraphingFunctions {

@@ -1,6 +1,6 @@
-<calculatorvariables>
+<variabledefinitions>
     <variable>
-        <input>a</input>
-        <output>1.00</output>
+        <symbol>a</symbol>
+        <value>1.00</value>
     </variable>
-</calculatorvariables>
+</variabledefinitions>
