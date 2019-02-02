@@ -28,60 +28,80 @@
 // SOFTWARE.
 
 import Foundation
+import Darwin
 
 class BasicOperations {
-    func add(_ a: Float, _ b: Float) {
+    func add(_ a: Double, _ b: Double) -> Double {
         return a + b
     }
-    func subtract(_ a: Float, _ b: Float) {
+    func subtract(_ a: Double, _ b: Double) -> Double  {
         return a - b
     }
-    func multiply(_ a: Float, _ b: Float) {
+    func multiply(_ a: Double, _ b: Double) -> Double  {
         return a * b
     }
-    func divide(_ a: Float, _ b: Float) {
+    func divide(_ a: Double, _ b: Double) -> Double  {
         return a / b
     }
-    func square(_ a: Float) {
-        return a ** 2
+    func square(_ a: Double) -> Double  {
+        return pow(abs(a), 2)
     }
-    func exponent(_ a: Float, _ b: Float) {
-        return a - b
+    func exponent(_ a: Double, _ b: Double) -> Double  {
+        return pow(abs(a), abs(b))
     }
-    func squareRoot(_ a: Float) {
-        return a - 2
+    func squareRoot(_ a: Double) -> Double  {
+        return pow(abs(a), (1 / 2))
     }
-    func root(_ a: Float, _ b: Float) {
-        return a - b
+    func root(_ a: Double, _ b: Double) -> Double  {
+        return pow(abs(a), (1 / abs(b)))
     }
 }
 
 class AlgebraicFunctions {
     func solve(_ equation: String, _ variable: String) {
-        
+
     }
 }
 
 class VariableHandling {
-    func storeVariable(_ variable: String, _ value: Float) {
-    
+    func storeVariable(_ variable: String, _ value: Double) {
+
     }
-    
-    func retrieveVariable(_ variable: String) {
-        
+
+    func retrieveVariable(_ variable: String) -> Double {
+        return 0.00
     }
-    
+
 }
 
 class FractionHandling {
-    
+
 }
 
 class GraphingFunctions {
-    
+
 }
 
 func changeGraphingState(_ newState: String) {
-    
+
 }
 
+func parseInput(_ input: String) -> String {
+    if input == "exit" {
+        exit(0)
+    } else if input == "quit" {
+        exit(0)
+    }
+    return "placeholder"
+}
+
+func main() {
+    print("scientific-calculator> ", terminator:"")
+    if let stdin = readLine() {
+        var output = parseInput(stdin)
+    }
+}
+
+while true {
+    main()
+}
