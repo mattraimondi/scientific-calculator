@@ -161,9 +161,23 @@ func parseInput(_ input: String) -> String {
 
 // To assume a nice interactive environment, the history is written to a file.
 func writeHistory(_ input: String) {
-    //let history = currentDirectoryPath.appendingPathComponent("scientific_history")
-    //input.write(to: history, atomically: true, encoding: String.Encoding.utf8)
-} // This is a note for Matt so he knows where he left off. Issues writing to file.
+    let homeDirURL = FileManager.default.homeDirectoryForCurrentUser
+    let history = homeDirURL.appendingPathComponent(".scientific_history")
+    let filteredInput = "\(input)\n"
+    do {
+        let fileHandle = try FileHandle(forWritingTo: history)
+        fileHandle.seekToEndOfFile()
+        fileHandle.write(filteredInput.data(using: .utf8)!)
+        fileHandle.closeFile()
+    } catch {
+        print("Error writing to file \(error)")
+        do {
+            try filteredInput.write(to: history, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            print(error)
+        }
+    }
+}
 
 // This is the main function which handles input and output from the user.
 func main() {
