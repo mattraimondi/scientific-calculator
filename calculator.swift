@@ -2,7 +2,7 @@
 // www.mattraimondi.com
 // www.github.com/mattraimondi
 
-// Scientific Calculator 1.0.0-alpha.1
+// Scientific Calculator 1.0.0-alpha.2
 // calculator.swift
 
 // MIT License
@@ -29,30 +29,38 @@
 
 import Foundation
 import Darwin
+import Cocoa
 
+// This function displays help.
+func displayHelp() {
+    print("help text here")
+    main()
+} // This is a note for Matt so he knows where he left off. No help text yet.
+
+// This is a class with methods for the basic operations which will be built upon for higher mathematical concepts.
 class BasicOperations {
-    func add(_ a: Double, _ b: Double) -> Double {
+    class func add(_ a: Double, _ b: Double) -> Double {
         return a + b
     }
-    func subtract(_ a: Double, _ b: Double) -> Double  {
+    class func subtract(_ a: Double, _ b: Double) -> Double  {
         return a - b
     }
-    func multiply(_ a: Double, _ b: Double) -> Double  {
+    class func multiply(_ a: Double, _ b: Double) -> Double  {
         return a * b
     }
-    func divide(_ a: Double, _ b: Double) -> Double  {
+    class func divide(_ a: Double, _ b: Double) -> Double  {
         return a / b
     }
-    func square(_ a: Double) -> Double  {
+    class func square(_ a: Double) -> Double  {
         return pow(abs(a), 2)
     }
-    func exponent(_ a: Double, _ b: Double) -> Double  {
+    class func exponent(_ a: Double, _ b: Double) -> Double  {
         return pow(abs(a), abs(b))
     }
-    func squareRoot(_ a: Double) -> Double  {
+    class func squareRoot(_ a: Double) -> Double  {
         return pow(abs(a), (1 / 2))
     }
-    func root(_ a: Double, _ b: Double) -> Double  {
+    class func root(_ a: Double, _ b: Double) -> Double  {
         return pow(abs(a), (1 / abs(b)))
     }
 }
@@ -63,17 +71,22 @@ class AlgebraicFunctions {
     }
 }
 
+// Since scientific calculators must be able to handle variable information, a class of methods has been created
+// to interact with an XML file for the long term storage of variables.
 class VariableHandling {
-    func storeVariable(_ variable: String, _ value: Double) {
+    class func storeVariable(_ variable: String, _ value: Double) {
 
     }
 
-    func retrieveVariable(_ variable: String) -> Double {
+    class func retrieveVariable(_ variable: String) -> Double {
         return 0.00
     }
 
 }
 
+// Ah, fractions... they can be tricky to handle, especially without a decent GUI. Therefore,
+// there is a class specifically dedicated to the manipulation, handling, and representation of fractions
+// in a decimal dominated evironment.
 class FractionHandling {
 
 }
@@ -86,22 +99,87 @@ func changeGraphingState(_ newState: String) {
 
 }
 
+// This function performs arithmatic on the parsed input. Most of the logic takes place in this function.
+func performArithmetic(_ inputArray: Array<String>, _ inputArrayLength: Int) -> String {
+    var operationCount: Int = 0
+    let operations: Array<String> = ["+", "-", "*", "/", "**", "-*"]
+    let firstValue: String! = inputArray.first
+
+    if operations.contains(firstValue) {
+        displayHelp()
+    }
+
+    for object in inputArray {
+        if operations.contains(object) {
+            operationCount += 1
+        }
+    }
+
+    for object in inputArray {
+        if object == "**" {
+            let operationIndex: Int = inputArray.firstIndex(of: object)!
+            print(BasicOperations.exponent(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
+        } else if object == "-*" {
+            let operationIndex: Int = inputArray.firstIndex(of: object)!
+            print(BasicOperations.root(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
+        } else if object == "*" {
+            let operationIndex: Int = inputArray.firstIndex(of: object)!
+            print(BasicOperations.multiply(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
+        } else if object == "/" {
+            let operationIndex: Int = inputArray.firstIndex(of: object)!
+            print(BasicOperations.divide(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
+        } else if object == "+" {
+            let operationIndex: Int = inputArray.firstIndex(of: object)!
+            print(BasicOperations.add(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
+        } else if object == "-" {
+            let operationIndex: Int = inputArray.firstIndex(of: object)!
+            print(BasicOperations.subtract(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
+        }
+    } // This is a note for Matt so he knows where he left off. Dynamic array, as of now does operations seperately.
+
+    return String(operationCount)
+}
+
+// Here we have a function for tokenizing and parsing strings.
 func parseInput(_ input: String) -> String {
+    var inputArray: Array<String> = []
+    var inputArrayLength: Int = 0
+
     if input == "exit" {
         exit(0)
     } else if input == "quit" {
         exit(0)
-    }
-    return "placeholder"
+    } else if input == "help" {
+        displayHelp()
+    } else {
+        inputArray = input.components(separatedBy: " ")
+        inputArrayLength = inputArray.count
+	}
+
+    return performArithmetic(inputArray, inputArrayLength)
 }
 
+// To assume a nice interactive environment, the history is written to a file.
+func writeHistory(_ input: String) {
+    //let history = currentDirectoryPath.appendingPathComponent("scientific_history")
+    //input.write(to: history, atomically: true, encoding: String.Encoding.utf8)
+} // This is a note for Matt so he knows where he left off. Issues writing to file.
+
+// This is the main function which handles input and output from the user.
 func main() {
+    var output: String = ""
+
     print("scientific-calculator> ", terminator:"")
     if let stdin = readLine() {
-        var output = parseInput(stdin)
+        writeHistory(stdin)
+        output = parseInput(stdin)
     }
+
+    print(output)
 }
 
+// This is what gets executed first.
+print("Welcome to Scientific Calculator by Matthew Raimondi\nwww.mattraimondi.com\n\nTo exit, simply type \'exit\'\nFor help, simply type \'help\'\n")
 while true {
     main()
 }
