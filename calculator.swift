@@ -2,7 +2,7 @@
 // www.mattraimondi.com
 // www.github.com/mattraimondi
 
-// Scientific Calculator 1.0.0-alpha.2
+// Scientific Calculator 1.0.1-alpha.1
 // calculator.swift
 
 // MIT License
@@ -31,11 +31,11 @@ import Foundation
 import Darwin
 import Cocoa
 
-// This function displays help.
+// This function displays help. This is a note for Matt so he knows where he left off. No help text yet.
 func displayHelp() {
     print("help text here")
-    main()
-} // This is a note for Matt so he knows where he left off. No help text yet.
+    exit(0)
+}
 
 // This is a class with methods for the basic operations which will be built upon for higher mathematical concepts.
 class BasicOperations {
@@ -66,7 +66,7 @@ class BasicOperations {
 }
 
 class AlgebraicFunctions {
-    func solve(_ equation: String, _ variable: String) {
+    class func solve(_ equation: String, _ variable: String) {
 
     }
 }
@@ -100,44 +100,81 @@ func changeGraphingState(_ newState: String) {
 }
 
 // This function performs arithmatic on the parsed input. Most of the logic takes place in this function.
-func performArithmetic(_ inputArray: Array<String>, _ inputArrayLength: Int) -> String {
-    var operationCount: Int = 0
-    let operations: Array<String> = ["+", "-", "*", "/", "**", "-*"]
-    let firstValue: String! = inputArray.first
+func performArithmetic(_ passedArray: Array<String>, _ inputArrayLength: Int) -> String {
+    var inputArray: Array<String> = passedArray
+    let operations: Array<String> = ["**", "-*", "*", "/", "+", "-"]
+    let alphaNumerals: Array<String> = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    let alphaNumeralsCapital: Array<String> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
-    if operations.contains(firstValue) {
+    if operations.contains(inputArray[0]) {
         displayHelp()
     }
-
-    for object in inputArray {
-        if operations.contains(object) {
-            operationCount += 1
+    
+    for word in inputArray {
+        for letter in word {
+            if alphaNumerals.contains(String(letter)) {
+                displayHelp()
+            } else if alphaNumeralsCapital.contains(String(letter)) {
+                displayHelp()
+            }
         }
     }
 
-    for object in inputArray {
-        if object == "**" {
-            let operationIndex: Int = inputArray.firstIndex(of: object)!
-            print(BasicOperations.exponent(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
-        } else if object == "-*" {
-            let operationIndex: Int = inputArray.firstIndex(of: object)!
-            print(BasicOperations.root(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
-        } else if object == "*" {
-            let operationIndex: Int = inputArray.firstIndex(of: object)!
-            print(BasicOperations.multiply(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
-        } else if object == "/" {
-            let operationIndex: Int = inputArray.firstIndex(of: object)!
-            print(BasicOperations.divide(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
-        } else if object == "+" {
-            let operationIndex: Int = inputArray.firstIndex(of: object)!
-            print(BasicOperations.add(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
-        } else if object == "-" {
-            let operationIndex: Int = inputArray.firstIndex(of: object)!
-            print(BasicOperations.subtract(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
+    while inputArray.count != 1 {
+        for object in inputArray { // nested if, if ** in then this whole block for each operation... or if * then sub if * for each operation...
+            if inputArray.contains("**") {
+                if object == "**" {
+                    let operationIndex: Int = inputArray.firstIndex(of: object)!
+                    inputArray[operationIndex] = String(BasicOperations.exponent(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
+                    inputArray.remove(at: operationIndex + 1)
+                    inputArray.remove(at: operationIndex - 1)
+                    continue
+                }
+            } else if inputArray.contains("-*") {
+                if object == "-*" {
+                    let operationIndex: Int = inputArray.firstIndex(of: object)!
+                    inputArray[operationIndex] = String(BasicOperations.root(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
+                    inputArray.remove(at: operationIndex + 1)
+                    inputArray.remove(at: operationIndex - 1)
+                    continue
+                }
+            } else if inputArray.contains("*") {
+                if object == "*" {
+                    let operationIndex: Int = inputArray.firstIndex(of: object)!
+                    inputArray[operationIndex] = String(BasicOperations.multiply(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
+                    inputArray.remove(at: operationIndex + 1)
+                    inputArray.remove(at: operationIndex - 1)
+                    continue
+                }
+            } else if inputArray.contains("/") {
+                if object == "/" {
+                    let operationIndex: Int = inputArray.firstIndex(of: object)!
+                    inputArray[operationIndex] = String(BasicOperations.divide(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
+                    inputArray.remove(at: operationIndex + 1)
+                    inputArray.remove(at: operationIndex - 1)
+                    continue
+                }
+            } else if inputArray.contains("+") {
+                if object == "+" {
+                    let operationIndex: Int = inputArray.firstIndex(of: object)!
+                    inputArray[operationIndex] = String(BasicOperations.add(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
+                    inputArray.remove(at: operationIndex + 1)
+                    inputArray.remove(at: operationIndex - 1)
+                    continue
+                }
+            } else if inputArray.contains("-") {
+                if object == "-" {
+                    let operationIndex: Int = inputArray.firstIndex(of: object)!
+                    inputArray[operationIndex] = String(BasicOperations.subtract(Double(inputArray[operationIndex - 1])!, Double(inputArray[operationIndex + 1])!))
+                    inputArray.remove(at: operationIndex + 1)
+                    inputArray.remove(at: operationIndex - 1)
+                    continue
+                }
+            }
         }
-    } // This is a note for Matt so he knows where he left off. Dynamic array, as of now does operations seperately.
+    }
 
-    return String(operationCount)
+    return String(inputArray[0])
 }
 
 // Here we have a function for tokenizing and parsing strings.
@@ -159,7 +196,7 @@ func parseInput(_ input: String) -> String {
     return performArithmetic(inputArray, inputArrayLength)
 }
 
-// To assume a nice interactive environment, the history is written to a file.
+// To create a nice interactive environment, the history is written to a file.
 func writeHistory(_ input: String) {
     let homeDirURL = FileManager.default.homeDirectoryForCurrentUser
     let history = homeDirURL.appendingPathComponent(".scientific_history")
