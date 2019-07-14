@@ -1,4 +1,4 @@
 # scientific-calculator
-a scientific calculator for those who don't want/need to buy one, written in swift 4
+a scientific calculator for those who don't want/need to buy one, written in swift 5
 
-###### Heads Up! This script is still in testing.
+###### Heads Up! This program is still in testing.
