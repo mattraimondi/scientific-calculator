@@ -31,10 +31,17 @@ import Foundation
 import Darwin
 import Cocoa
 
+// This function is the shutdown function, which completes a few tasks before "shutting down" and exiting.
+func shutdown(_ mode: Int) {
+	let mode32 = Int32(mode)
+	print("exiting calculator...")
+	exit(mode32)
+}
+
 // This function displays help. This is a note for Matt so he knows where he left off. No help text yet.
 func displayHelp() {
     print("help text here")
-    exit(0)
+    shutdown(0)
 }
 
 // This is a class with methods for the basic operations which will be built upon for higher mathematical concepts.
@@ -183,9 +190,9 @@ func parseInput(_ input: String) -> String {
     var inputArrayLength: Int = 0
 
     if input == "exit" {
-        exit(0)
+        shutdown(0)
     } else if input == "quit" {
-        exit(0)
+        shutdown(0)
     } else if input == "help" {
         displayHelp()
     } else {
